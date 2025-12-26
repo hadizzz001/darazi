@@ -28,7 +28,7 @@ const CarCard = ({ temp }: CarCardProps) => {
                     />
 
                     {/* Discount flag */}
-                    {discount > 0 && (
+                    {discountPercentage > 0 && (
                         <div
                             className="absolute top-2 left-2 bg-[#222] text-white text-xs font-regular px-3 py-1 z-20"
                             style={{
@@ -78,7 +78,7 @@ const CarCard = ({ temp }: CarCardProps) => {
       })()
     ) : (
       // ✅ Normal product (single type)
-      discount && discount > 0 ? (
+      discountPercentage && discountPercentage > 0 ? (
         <>
           <span className="py-1 myRed1">
             ${parseFloat(discount).toFixed(2)}

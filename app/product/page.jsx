@@ -302,6 +302,22 @@ useEffect(() => {
 
 
 
+  const whatsappNumber = "96170985822"; // put your number WITHOUT +
+
+const handleWhatsAppOrder = () => {
+  const message = `
+Order Details:
+Item: ${title}
+Price: $${price}
+Quantity: ${quantity}
+Color: ${selectedColor || "N/A"}
+Size: ${selectedSize || "N/A"}
+  `.trim();
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+};
+
 
 
 
@@ -647,6 +663,36 @@ useEffect(() => {
                             </span>
                           </form>
 
+
+                                              <span className="ProvidersSingleProduct--selected">
+  {!isOutOfStock ? (
+    <>
+ 
+
+      {/* WhatsApp Order Button */}
+      <button
+        type="button"
+        onClick={handleWhatsAppOrder}
+        style={{
+          marginTop: "10px",
+          width: "100%",
+          backgroundColor: "#25D366",
+          color: "#fff",
+          border: "none",
+          padding: "14px",
+          fontSize: "16px",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        ORDER ON WHATSAPP
+      </button>
+    </>
+  ) : (
+    <OutOfStockComponent itemName={title} />
+  )}
+</span>
+
                           <span className="ProvidersIfSelectedProductMatchesFilter">
                             <p
                               className="myGray"
@@ -658,6 +704,10 @@ useEffect(() => {
                       )}
                       <br />
                     </div>
+
+
+
+
                   </section>
                 </div>
               </div>
