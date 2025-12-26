@@ -1,10 +1,31 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 
 export default function OfferHeadline() {
+  const [texts, setTexts] = useState([]);
+
+  useEffect(() => {
+    const fetchTexts = async () => {
+      try {
+        const res = await fetch("/api/txt");
+        const data = await res.json();
+        setTexts(data);
+      } catch (error) {
+        console.error("Failed to fetch offer headlines:", error);
+      }
+    };
+
+    fetchTexts();
+  }, []);
+
+  // Don't render if no data
+  if (!texts.length) return null;
+
   return (
     <div
       style={{
@@ -25,16 +46,13 @@ export default function OfferHeadline() {
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop={true}
       >
-        <SwiperSlide>
-          <div  style={{ textAlign: "center", color: "#222"}}>
-            Worldwide shipping!
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div  style={{ textAlign: "center", color: "#222" }}>
-            Free Shipping on all orders above $50
-          </div>
-        </SwiperSlide>
+        {texts.map((item) => (
+          <SwiperSlide key={item._id}>
+            <div style={{ textAlign: "center", color: "#fff" }}>
+              {item.title}
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

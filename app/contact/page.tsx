@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import {sendEmail} from '../api/sendEmail/sendEmail'
+import { MapPin, Phone, MessageCircle } from "lucide-react";
 
  
 
@@ -135,6 +136,72 @@ export default function Home() {
           </div>
         </div>
         
+
+<div className="contact-info-wrapper mt-10 mb-10">
+  <div className="contact-info-list">
+
+    {/* Location 1 */}
+    <div>
+      <div className="contact-info-title">
+        <MapPin size={18} />
+        Bourjein – Chouf
+      </div>
+
+      <div className="contact-info-sub">
+        Main Road
+      </div>
+
+      <a
+        href="https://wa.me/96176322409"
+        target="_blank"
+        className="contact-info-link whatsapp"
+      >
+        <MessageCircle size={16} />
+        WhatsApp +961 76 322 409
+      </a>
+    </div>
+
+    {/* Location 2 */}
+    <div>
+      <div className="contact-info-title">
+        <MapPin size={18} />
+        Saida
+      </div>
+
+      <div className="contact-info-sub">
+        Rahbet Street
+      </div>
+
+      <a
+        href="https://wa.me/96179031452"
+        target="_blank"
+        className="contact-info-link whatsapp"
+      >
+        <MessageCircle size={16} />
+        WhatsApp +961 79 031 452
+      </a>
+    </div>
+
+    {/* Customer Service */}
+    <div>
+      <div className="contact-info-title">
+        <Phone size={18} />
+        Customer Service
+      </div>
+
+      <a
+        href="tel:+96170985822"
+        className="contact-info-link phone"
+      >
+        <Phone size={16} />
+        +961 70 985 822
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
       </div>
       <div className="clearfix" />
       
