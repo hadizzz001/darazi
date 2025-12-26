@@ -54,18 +54,21 @@ const Footer = () => {
             <div className="text-left">
               <p className="myfp mb-3">Categories</p>
               <ul className="space-y-2">
-                {services.length > 0 ? (
-                  services.map((item) => (
-                    <li key={item._id}>
-                      <a href={`/search?cat=${item.name}`} className="colorp  ">
-                        {item.name}
-                      </a>
-                    </li>
+{services.length > 0 ? (
+  services.map((item) => (
+    <li key={item._id}>
+      <a
+        href={`/search?cat=${item.name}`}
+        className="colorp capitalize"
+      >
+        {item.name}
+      </a>
+    </li>
+  ))
+) : (
+  <li className="text-gray-400 italic">Loading...</li>
+)}
 
-                  ))
-                ) : (
-                  <li className="text-gray-400 italic">Loading...</li>
-                )}
               </ul>
             </div>
           </div>
@@ -128,18 +131,19 @@ const Footer = () => {
               </div>
             </div>
             <div
-              className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
+`}
             >
               <ul className="mt-2 space-y-2 ">
                 {dynamic ? (
                   services.length > 0 ? (
                     services.map((item) => (
-                      <li key={item.id}>
+                      <li key={item._id}>
                         <a
                           href={`/search?cat=${item.name}`}
                           className="colorp capitalize"
                         >
-                          {item.title
+                          {item.name
                             ?.toLowerCase()
                             .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase())}
                         </a>
