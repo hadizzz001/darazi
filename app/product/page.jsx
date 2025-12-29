@@ -322,7 +322,7 @@ Size: ${selectedSize || "N/A"}
 
 
   const handleCopy = () => {
-    const url = `https://darazi.hadizproductions.com?id=${search}&&imgg=${imgg}`;
+    const url = `https://darazitrading.hadizproductions.com?id=${search}&&imgg=${imgg}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000); // reset after 2 sec
