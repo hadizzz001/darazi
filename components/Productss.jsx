@@ -165,7 +165,7 @@ const fetchCategories = async () => {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         {allTemp && allTemp.length > 0 ? (
                             allTemp.map((item) => (
-                                <a key={item._id} href={`/product?id=${item._id}`}>
+                                <a key={item._id} href={`/product?id=${item._id}&imgg=${item.img[0]}`}>
                                     <div className="grid grid-cols-1">
                                         {/* Product Image */}
                                         <div className="relative w-full aspect-square">

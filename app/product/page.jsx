@@ -24,7 +24,7 @@ const Page = () => {
   const search = searchParams.get('id');
   const custom = searchParams.get('custom');
   const imgg = searchParams.get('imgg');
-  let imgs, title, price, desc, cat, brand, discount, id, stock, type,  sub, fact, views, orders   ;
+  let imgs, title, price, desc, cat, brand, discount, id, stock, type, sub, fact, views, orders;
   const { cart, addToCart, quantities } = useCart();
   const { isBooleanValue, setBooleanValue } = useBooleanValue();
   const isInCart = cart?.some((item) => item._id === search);
@@ -39,52 +39,52 @@ const Page = () => {
   const hasRun = useRef(false);
   const [zoomedImg, setZoomedImg] = useState(null);
   const color = allTemp1?.color ?? []; // ✅ assure color is always an array
- 
+  const [copied, setCopied] = useState(false);
 
 
 
 
-useEffect(() => {
-  if (!color || color.length === 0) return;
+  useEffect(() => {
+    if (!color || color.length === 0) return;
 
-  const firstColor = color.find(c => c.sizes?.some(s => s.qty > 0)) || color[0];
+    const firstColor = color.find(c => c.sizes?.some(s => s.qty > 0)) || color[0];
 
-  if (firstColor) {
-    setSelectedColor(firstColor.code);  // ✅ use code
-    if (firstColor.sizes && firstColor.sizes.length > 0) {
-      const firstSize = firstColor.sizes.find(s => s.qty > 0);
-      if (firstSize) {
-        setSelectedSize(firstSize.size);
-        setDisplayedPrice(firstSize.price);
+    if (firstColor) {
+      setSelectedColor(firstColor.code);  // ✅ use code
+      if (firstColor.sizes && firstColor.sizes.length > 0) {
+        const firstSize = firstColor.sizes.find(s => s.qty > 0);
+        if (firstSize) {
+          setSelectedSize(firstSize.size);
+          setDisplayedPrice(firstSize.price);
+        }
+      } else {
+        setDisplayedPrice(firstColor.price ?? null);
+        setSelectedSize(null);
       }
-    } else {
-      setDisplayedPrice(firstColor.price ?? null);
-      setSelectedSize(null);
     }
-  }
-}, [allTemp1]);
+  }, [allTemp1]);
 
 
-// ✅ Colors with sizes
-const availableColorsWithSizes = color?.filter(c =>
-  c.sizes?.some(size => size.qty > 0)
-);
+  // ✅ Colors with sizes
+  const availableColorsWithSizes = color?.filter(c =>
+    c.sizes?.some(size => size.qty > 0)
+  );
 
-// ✅ Colors without sizes
-const availableColorsWithoutSizes = color?.filter(
-  c => (!c.sizes || c.sizes.length === 0) && c.qty > 0
-);
+  // ✅ Colors without sizes
+  const availableColorsWithoutSizes = color?.filter(
+    c => (!c.sizes || c.sizes.length === 0) && c.qty > 0
+  );
 
-// ✅ Detect if collection has sizes
-useEffect(() => {
-  setHasSizes(Array.isArray(color) && color.some(c => c.sizes?.length > 0));
-}, [color]);
-
-
+  // ✅ Detect if collection has sizes
+  useEffect(() => {
+    setHasSizes(Array.isArray(color) && color.some(c => c.sizes?.length > 0));
+  }, [color]);
 
 
 
- 
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,7 +120,7 @@ useEffect(() => {
     discount = allTemp1.discount;
     desc = allTemp1.description;
     stock = allTemp1.stock;
-    type = allTemp1.type; 
+    type = allTemp1.type;
     sub = allTemp1.sub;
     fact = allTemp1.factory;
     views = allTemp1.views;
@@ -189,50 +189,50 @@ useEffect(() => {
 
 
 
- 
 
 
-const handleSubmit = (e) => {
-  e.preventDefault();
 
-  console.log("====== ADD TO CART CLICKED ======");
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  console.log("Product Object (allTemp1):", allTemp1);
-  console.log("Selected Quantity:", quantity);
-  console.log("Selected Color (title):", selectedColor);
+    console.log("====== ADD TO CART CLICKED ======");
 
-  const selectedColorObj = color?.find((c) => c.title === selectedColor);
-  console.log("Selected Color Object:", selectedColorObj);
+    console.log("Product Object (allTemp1):", allTemp1);
+    console.log("Selected Quantity:", quantity);
+    console.log("Selected Color (title):", selectedColor);
 
-  console.log("Selected Size:", selectedSize);
+    const selectedColorObj = color?.find((c) => c.title === selectedColor);
+    console.log("Selected Color Object:", selectedColorObj);
 
-  // VALIDATIONS
-  if (isCollection && !selectedColor) {
-    console.warn("No color selected – blocking add to cart.");
-    alert("Please select a color.");
-    return;
-  }
+    console.log("Selected Size:", selectedSize);
 
-  if (selectedColorObj?.sizes?.length > 0 && !selectedSize) {
-    console.warn("No size selected – blocking add to cart.");
-    alert("Please select a size.");
-    return;
-  }
+    // VALIDATIONS
+    if (isCollection && !selectedColor) {
+      console.warn("No color selected – blocking add to cart.");
+      alert("Please select a color.");
+      return;
+    }
 
-  // LOG BEFORE ADD
-  console.log("Cart BEFORE adding:", cart);
+    if (selectedColorObj?.sizes?.length > 0 && !selectedSize) {
+      console.warn("No size selected – blocking add to cart.");
+      alert("Please select a size.");
+      return;
+    }
 
-  // DO ADD
-  addToCart(allTemp1, quantity, selectedColor, selectedSize);
+    // LOG BEFORE ADD
+    console.log("Cart BEFORE adding:", cart);
 
-  // LOG AFTER ADD
-  setTimeout(() => {
-    console.log("Cart AFTER adding:", cart);
-  }, 50);
+    // DO ADD
+    addToCart(allTemp1, quantity, selectedColor, selectedSize);
 
-  handleClickc();
-  incrementViews123();
-};
+    // LOG AFTER ADD
+    setTimeout(() => {
+      console.log("Cart AFTER adding:", cart);
+    }, 50);
+
+    handleClickc();
+    incrementViews123();
+  };
 
 
 
@@ -250,7 +250,7 @@ const handleSubmit = (e) => {
   const isSingleOutOfStock = isSingle && Number(stock) === 0;
   const isOutOfStock = isCollectionOutOfStock || isSingleOutOfStock || isCollectionOutOfStock1;
 
- 
+
 
 
 
@@ -265,31 +265,31 @@ const handleSubmit = (e) => {
 
 
 
-useEffect(() => {
-  if (!allTemp1 || !color || color.length === 0) return;
+  useEffect(() => {
+    if (!allTemp1 || !color || color.length === 0) return;
 
-  // Get first available color (with size if available)
-  const firstColor = color.find((c) =>
-    c.sizes?.some((s) => s.qty > 0)
-  ) || color[0];
+    // Get first available color (with size if available)
+    const firstColor = color.find((c) =>
+      c.sizes?.some((s) => s.qty > 0)
+    ) || color[0];
 
-  if (firstColor) {
-    setSelectedColor(firstColor.title); // <-- store title now
-    
-    if (firstColor.sizes && firstColor.sizes.length > 0) {
-      const firstSize = firstColor.sizes.find((s) => s.qty > 0);
-      if (firstSize) {
-        setSelectedSize(firstSize.size);
-        setDisplayedPrice(firstSize.price);
+    if (firstColor) {
+      setSelectedColor(firstColor.title); // <-- store title now
+
+      if (firstColor.sizes && firstColor.sizes.length > 0) {
+        const firstSize = firstColor.sizes.find((s) => s.qty > 0);
+        if (firstSize) {
+          setSelectedSize(firstSize.size);
+          setDisplayedPrice(firstSize.price);
+        }
+      } else {
+        setDisplayedPrice(firstColor.price ?? null);
       }
-    } else {
-      setDisplayedPrice(firstColor.price ?? null);
     }
-  }
-}, [allTemp1]);
+  }, [allTemp1]);
 
 
- 
+
 
 
 
@@ -304,8 +304,8 @@ useEffect(() => {
 
   const whatsappNumber = "96170985822"; // put your number WITHOUT +
 
-const handleWhatsAppOrder = () => {
-  const message = `
+  const handleWhatsAppOrder = () => {
+    const message = `
 Order Details:
 Item: ${title}
 Price: $${price}
@@ -314,9 +314,21 @@ Color: ${selectedColor || "N/A"}
 Size: ${selectedSize || "N/A"}
   `.trim();
 
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
-};
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+
+
+
+  const handleCopy = () => {
+    const url = `https://darazi.hadizproductions.com?id=${search}&&imgg=${imgg}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // reset after 2 sec
+    });
+  };
+
 
 
 
@@ -478,7 +490,7 @@ Size: ${selectedSize || "N/A"}
                         />
                       </h4>
                       <p className="mb-2 myGray">Brand: {fact}</p>
-                      <p className="mb-2 myGray">Category: {cat}</p> 
+                      <p className="mb-2 myGray">Category: {cat}</p>
                     </span>
 
                     <div className="ApexPriceAndFreeShippingWrapper">
@@ -490,118 +502,117 @@ Size: ${selectedSize || "N/A"}
                     <hr />
 
                     <div className="ProductSelector_IntroBlurb">
-{isCollection && (
-  <div className="mb-4">
-    <h2 className="color-label myGray">Choose a Color:</h2>
-    <div className="color-options flex flex-wrap">
-{availableColorsWithSizes?.map((c, index) => (
-  <div
-    key={index}
-    onClick={() => {
-      setSelectedColor(c.title);  // store title instead of code
-      setSelectedSize(null);
-      setDisplayedPrice(null);
-    }}
-    className={`relative flex items-center justify-center cursor-pointer m-2 rounded-full transition-all duration-200 ${
-      selectedColor === c.title ? 'myboo scale-95' : 'border-2 border-gray-300'
-    }`}
-    style={{
-      width: selectedColor === c.title ? '44px' : '48px',
-      height: selectedColor === c.title ? '44px' : '48px',
-    }}
-    title={c.title} // still show tooltip
-  >
-    <div
-      className="rounded-full transition-all duration-200"
-      style={{
-        backgroundColor: c.code, // still use hex for display
-        width: selectedColor === c.title ? '28px' : '36px',
-        height: selectedColor === c.title ? '28px' : '36px',
-      }}
-    />
-  </div>
-))}
+                      {isCollection && (
+                        <div className="mb-4">
+                          <h2 className="color-label myGray">Choose a Color:</h2>
+                          <div className="color-options flex flex-wrap">
+                            {availableColorsWithSizes?.map((c, index) => (
+                              <div
+                                key={index}
+                                onClick={() => {
+                                  setSelectedColor(c.title);  // store title instead of code
+                                  setSelectedSize(null);
+                                  setDisplayedPrice(null);
+                                }}
+                                className={`relative flex items-center justify-center cursor-pointer m-2 rounded-full transition-all duration-200 ${selectedColor === c.title ? 'myboo scale-95' : 'border-2 border-gray-300'
+                                  }`}
+                                style={{
+                                  width: selectedColor === c.title ? '44px' : '48px',
+                                  height: selectedColor === c.title ? '44px' : '48px',
+                                }}
+                                title={c.title} // still show tooltip
+                              >
+                                <div
+                                  className="rounded-full transition-all duration-200"
+                                  style={{
+                                    backgroundColor: c.code, // still use hex for display
+                                    width: selectedColor === c.title ? '28px' : '36px',
+                                    height: selectedColor === c.title ? '28px' : '36px',
+                                  }}
+                                />
+                              </div>
+                            ))}
 
 
-    </div>
+                          </div>
 
-{selectedColor && availableColorsWithSizes.find(c => c.title === selectedColor) && (
-  <div className="mt-2">
-    <h2 className="size-label myGray">Choose a Size:</h2>
-    <div className="size-options flex flex-wrap">
-      {availableColorsWithSizes
-        .find(c => c.title === selectedColor) // ✅ use title
-        .sizes?.filter(s => s.qty > 0)
-        .map((s, idx) => (
-          <button
-            key={idx}
-            onClick={() => {
-              setSelectedSize(s.size);
-              setDisplayedPrice(s.price);
-            }}
-            className={`px-3 py-1 m-1 rounded ${selectedSize === s.size ? 'myboo22' : 'myboo2'}`}
-          >
-            {s.size}
-          </button>
-        ))}
-    </div>
-  </div>
-)}
+                          {selectedColor && availableColorsWithSizes.find(c => c.title === selectedColor) && (
+                            <div className="mt-2">
+                              <h2 className="size-label myGray">Choose a Size:</h2>
+                              <div className="size-options flex flex-wrap">
+                                {availableColorsWithSizes
+                                  .find(c => c.title === selectedColor) // ✅ use title
+                                  .sizes?.filter(s => s.qty > 0)
+                                  .map((s, idx) => (
+                                    <button
+                                      key={idx}
+                                      onClick={() => {
+                                        setSelectedSize(s.size);
+                                        setDisplayedPrice(s.price);
+                                      }}
+                                      className={`px-3 py-1 m-1 rounded ${selectedSize === s.size ? 'myboo22' : 'myboo2'}`}
+                                    >
+                                      {s.size}
+                                    </button>
+                                  ))}
+                              </div>
+                            </div>
+                          )}
 
 
 
- 
-  </div>
-)}
 
-{/* --- price logic --- */}
-{hasSizes ? (
-  selectedSize ? (
-    (() => {
-      const original = parseFloat(displayedPrice);
-      return (
-        <div className="flex items-center space-x-2">
-          <h3 className="mb-2 myRed font-bold myPrice123">
-            ${original.toFixed(2)}
-          </h3>
-        </div>
-      );
-    })()
-  ) : null
-) : (() => {
-  const originalPrice = parseFloat(price || "0");
-  const discountPrice = parseFloat(discount || "0");
+                        </div>
+                      )}
 
-  // If discount is the same as price, show only price
-  if (originalPrice === discountPrice || discountPrice === 0) {
-    return (
-      <div className="flex items-center space-x-2">
-        <h3 className="mb-2 myRed font-regular myPrice1234">
-          ${originalPrice.toFixed(2)}
-        </h3>
-      </div>
-    );
-  }
+                      {/* --- price logic --- */}
+                      {hasSizes ? (
+                        selectedSize ? (
+                          (() => {
+                            const original = parseFloat(displayedPrice);
+                            return (
+                              <div className="flex items-center space-x-2">
+                                <h3 className="mb-2 myRed font-bold myPrice123">
+                                  ${original.toFixed(2)}
+                                </h3>
+                              </div>
+                            );
+                          })()
+                        ) : null
+                      ) : (() => {
+                        const originalPrice = parseFloat(price || "0");
+                        const discountPrice = parseFloat(discount || "0");
 
-  const discountPercent = Math.round(
-    ((originalPrice - discountPrice) / originalPrice) * 100
-  );
+                        // If discount is the same as price, show only price
+                        if (originalPrice === discountPrice || discountPrice === 0) {
+                          return (
+                            <div className="flex items-center space-x-2">
+                              <h3 className="mb-2 myRed font-regular myPrice1234">
+                                ${originalPrice.toFixed(2)}
+                              </h3>
+                            </div>
+                          );
+                        }
 
-  return (
-    <div className="flex items-center space-x-2">
-      <h3 className="mb-2 myRed font-bold myPrice1234">
-        ${discountPrice.toFixed(2)}
-      </h3>
-      <h2 className="mb-2 myGray line-through myPrice123">
-        ${originalPrice.toFixed(2)}
-      </h2>
+                        const discountPercent = Math.round(
+                          ((originalPrice - discountPrice) / originalPrice) * 100
+                        );
 
-      {discountPercent !== null && (
-        <span className="text-xs text-gray-500">({discountPercent}% off)</span>
-      )}
-    </div>
-  );
-})()}
+                        return (
+                          <div className="flex items-center space-x-2">
+                            <h3 className="mb-2 myRed font-bold myPrice1234">
+                              ${discountPrice.toFixed(2)}
+                            </h3>
+                            <h2 className="mb-2 myGray line-through myPrice123">
+                              ${originalPrice.toFixed(2)}
+                            </h2>
+
+                            {discountPercent !== null && (
+                              <span className="text-xs text-gray-500">({discountPercent}% off)</span>
+                            )}
+                          </div>
+                        );
+                      })()}
 
 
 
@@ -664,34 +675,44 @@ Size: ${selectedSize || "N/A"}
                           </form>
 
 
-                                              <span className="ProvidersSingleProduct--selected">
-  {!isOutOfStock ? (
-    <>
- 
+                          <span className="ProvidersSingleProduct--selected">
+                            {!isOutOfStock ? (
+                              <>
 
-      {/* WhatsApp Order Button */}
-      <button
-        type="button"
-        onClick={handleWhatsAppOrder}
-        style={{
-          marginTop: "10px",
-          width: "100%",
-          backgroundColor: "#25D366",
-          color: "#fff",
-          border: "none",
-          padding: "14px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          cursor: "pointer",
-        }}
-      >
-        ORDER ON WHATSAPP
-      </button>
-    </>
-  ) : (
-    <OutOfStockComponent itemName={title} />
-  )}
-</span>
+
+                                {/* WhatsApp Order Button */}
+                                <button
+                                  type="button"
+                                  onClick={handleWhatsAppOrder}
+                                  style={{
+                                    marginTop: "10px",
+                                    width: "100%",
+                                    backgroundColor: "#25D366",
+                                    color: "#fff",
+                                    border: "none",
+                                    padding: "14px",
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  ORDER ON WHATSAPP
+                                </button>
+                              </>
+                            ) : (
+                              <OutOfStockComponent itemName={title} />
+                            )}
+                          </span>
+
+                          <div className="flex justify-center">
+                            <button
+                              onClick={handleCopy}
+                              className="textt px-4 py-2"
+                            >
+                              {copied ? 'Copied!' : 'Copy Link'}
+                            </button>
+                          </div>
+
 
                           <span className="ProvidersIfSelectedProductMatchesFilter">
                             <p
@@ -723,31 +744,31 @@ Size: ${selectedSize || "N/A"}
                     <div className="ProductTile-SliderContainer-Title br_text-3xl-serif br_text-white myGray">RELATED PRODUCTS:</div>
                     {allTemp2 && allTemp2?.length > 0 ? (
                       <section style={{ maxWidth: "100%" }}>
-<Swiper
-  spaceBetween={20}
-  loop
-  dir="rtl" // This makes the slider right-to-left
-  modules={[Autoplay]}
-  autoplay={{
-    delay: 2000,
-    stopOnLastSlide: false,
-    reverseDirection: true, // optional, for autoplay reverse
-  }}
-  breakpoints={{
-    150: {
-      slidesPerView: 2,
-    },
-    768: {
-      slidesPerView: 4,
-    },
-  }}
->
-  {allTemp2.map((temp, index) => (
-    <SwiperSlide key={temp._id}>
-      <CarCard temp={temp} index={index} />
-    </SwiperSlide>
-  ))}
-</Swiper>
+                        <Swiper
+                          spaceBetween={20}
+                          loop
+                          dir="rtl" // This makes the slider right-to-left
+                          modules={[Autoplay]}
+                          autoplay={{
+                            delay: 2000,
+                            stopOnLastSlide: false,
+                            reverseDirection: true, // optional, for autoplay reverse
+                          }}
+                          breakpoints={{
+                            150: {
+                              slidesPerView: 2,
+                            },
+                            768: {
+                              slidesPerView: 4,
+                            },
+                          }}
+                        >
+                          {allTemp2.map((temp, index) => (
+                            <SwiperSlide key={temp._id}>
+                              <CarCard temp={temp} index={index} />
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
 
                       </section>
                     ) : (

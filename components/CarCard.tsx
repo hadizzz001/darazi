@@ -17,7 +17,7 @@ const CarCard = ({ temp }: CarCardProps) => {
     const discountPercentage = Math.round(((price - discount) / price) * 100);
 
     return (
-        <a href={`/product?id=${_id}`}>
+        <a href={`/product?id=${_id}&imgg=${img[0]}`}>
             <div className="flex flex-col items-start w-full sm:w-[300px] mb-6 sm:mb-8">
                 {/* Image */}
                 <div className="relative w-full aspect-square overflow-hidden rounded-lg">

@@ -13,7 +13,7 @@ const CarCard5 = ({ temp }: CarCardProps) => {
 
 
     return (
-        <a href={`/product?id=${_id}`}>
+        <a href={`/product?id=${_id}&imgg=${img[0]}`}>
             <div className="br_grid br_grid-cols-1 supports-subgrid:br_row-span-4 supports-subgrid:br_grid-rows-[subgrid]">
                 <div className="Layout br_contents">
                     <center>
@@ -51,7 +51,7 @@ const CarCard5 = ({ temp }: CarCardProps) => {
                                 </div>
                                 <div className="text-center flex flex-col items-center justify-center px-3">
                                     <h3 style={{ height: "100px" }} className="text-center">
-                                        <a href={`/product?id=${_id}`} className="text-current no-underline">
+                                        <a href={`/product?id=${_id}&imgg=${img[0]}`} className="text-current no-underline">
                                             <h2 className="text-sm font-bold myGray py-1">{title}</h2>
                                             <div className="price-container inline-flex flex-wrap gap-x-2 items-baseline justify-center text-white">
                                                 <span className="font-light text-[11px] py-1 line-through text-gray-400">
