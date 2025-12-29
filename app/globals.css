@@ -1382,3 +1382,101 @@
 .contact-info-link:hover {
   opacity: 0.75;
 }
+
+
+
+/* DARAZI TRADING - Privacy Policy Styles */
+
+.dt-privacy-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+  color: #333 !important;
+}
+
+.dt-privacy-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 25px;
+  color: #111 !important;
+}
+
+.dt-privacy-heading {
+  font-size: 18px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #222 !important;
+}
+
+.dt-privacy-text {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.dt-privacy-list {
+  padding-left: 20px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.dt-privacy-list li {
+  margin-bottom: 6px;
+}
+
+
+
+
+/* ===== Store Features Section ===== */
+.store-features {
+  padding: 40px 0;
+}
+
+/* Container */
+.store-features__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+
+/* Item */
+.store-features__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Icon */
+.store-features__icon {
+  width: 42px;
+  height: 42px;
+  color: #3c9949;
+}
+
+/* Text */
+.store-features__text {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #222 !important;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .store-features__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .store-features__container {
+    grid-template-columns: 1fr;
+  }
+}

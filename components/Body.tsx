@@ -12,6 +12,7 @@ import Carousel from './Carousel';
 import Carousel1 from './Carousel1';
 import BrandCarousel from './BrandCarousel';
 import Productss from './Productss';
+import Row from './Row';
 
 
 
@@ -130,6 +131,7 @@ const Body = () => {
 
 <Productss /> 
  
+        <Row /> 
         <ReviewsSwiper /> 
         <BrandCarousel /> 
 
