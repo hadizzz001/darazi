@@ -53,7 +53,7 @@ export default function NavBar() {
         style={{ background: '#f1ede7' }}
       >
         {/* Desktop Nav */}
-        <div className="hidden md:flex px-4 py-7 items-center justify-between relative">
+        <div className="hidden md:flex px-4 py-6 items-center justify-between relative">
 
           {/* Left: Logo */}
           <div className="flex-shrink-0 mr-10">
@@ -62,7 +62,7 @@ export default function NavBar() {
                 src="https://res.cloudinary.com/dq8p68g9f/image/upload/v1766675930/785d4364-8290-48f8-a491-da4f9b8874c8-removebg-preview_iodwlz.png"
                 alt="Logo"
                 className="h-16"
-                style={{ maxHeight: '80px' }}
+                style={{ maxHeight: '100px' }}
               />
             </a>
           </div>
@@ -110,7 +110,7 @@ export default function NavBar() {
 
 
         {/* Mobile Nav */}
-        <div className="flex md:hidden px-4 py-4 items-center justify-between relative mobnavnew123">
+        <div className="flex md:hidden px-4 py-10 items-center justify-between relative mobnavnew123">
           {/* Left: Hamburger */}
           <button
             onClick={() => setMenuOpen(true)}
