@@ -35,9 +35,10 @@ export async function GET(req) {
     const rawSizes = searchParams.getAll("size");
 
     const search = rawSearch?.trim();
-    const cats = rawCats.map((c) => c.trim()).filter(Boolean);
-    const subs = rawSubs.map((c) => c.trim()).filter(Boolean);
-    const brnds = rawBrnds.map((c) => c.trim()).filter(Boolean);
+const cats = rawCats.map(c => c.trimEnd()).filter(Boolean);
+const subs = rawSubs.map(c => c.trimEnd()).filter(Boolean);
+const brnds = rawBrnds.map(c => c.trimEnd()).filter(Boolean);
+
     const sizes = rawSizes.map((s) => s.trim());
 
     console.log("🔎 RAW:", { rawCats, rawSubs, rawBrnds });
@@ -65,25 +66,45 @@ export async function GET(req) {
     }
 
     // ✅ MULTIPLE CATEGORY FILTER
-    if (cats.length > 0) {
-      if (cats.includes("yes")) query.arrival = "yes";
+// ✅ MULTIPLE CATEGORY FILTER (trim DB value)
+if (cats.length > 0) {
+  if (cats.includes("yes")) query.arrival = "yes";
 
-      const filteredCats = cats.filter((c) => c !== "yes");
+  const filteredCats = cats.filter((c) => c !== "yes");
 
-      if (filteredCats.length > 0) {
-        query.category = { $in: filteredCats };
-      }
-    }
+  if (filteredCats.length > 0) {
+    query.$expr = {
+      ...(query.$expr || {}),
+      $in: [
+        { $trim: { input: "$category" } },
+        filteredCats,
+      ],
+    };
+  }
+}
 
-    // ✅ MULTIPLE SUB-CATEGORY FILTER
-    if (subs.length > 0) {
-      query.sub = { $in: subs };
-    }
 
-    // ✅ MULTIPLE BRAND FILTER
-    if (brnds.length > 0) {
-      query.factory = { $in: brnds };
-    }
+if (subs.length > 0) {
+  query.$expr = {
+    ...(query.$expr || {}),
+    $in: [
+      { $trim: { input: "$sub" } },
+      subs,
+    ],
+  };
+}
+
+
+if (brnds.length > 0) {
+  query.$expr = {
+    ...(query.$expr || {}),
+    $in: [
+      { $trim: { input: "$factory" } },
+      brnds,
+    ],
+  };
+}
+
 
     // ✅ MULTIPLE SIZE FILTER
     if (sizes.length > 0) {
